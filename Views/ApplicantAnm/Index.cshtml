@@ -1,0 +1,166 @@
+﻿@model List<ApplicantsAnm>
+
+@{
+    ViewData["Title"] = "Applicant List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Applicant ID</th>
+                <th>Applicant Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model)
+            {
+                <tr>
+                    <td>@applicant.ApplicantId</td>
+                    <td>@applicant.AplicantName</td>
+                    <td>
+                        <button type="button" class="btn btn-primary view-details-btn btn-view" data-applicant-id="@applicant.ApplicantId" data-toggle="modal" data-target="#viewDetailsModal" >View Details</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- View Details Modal -->
+<div class="modal fade" id="viewDetailsModal" tabindex="-1" aria-labelledby="viewDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewDetailsModalLabel">Applicant Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="applicantDetailsForm">
+                    <div class="form-group">
+                        <label for="applicantIdInput">Applicant ID:</label>
+                        <input type="text" class="form-control" id="applicantIdInput" name="ApplicantId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantNameInput">Applicant Name:</label>
+                        <input type="text" class="form-control" id="applicantNameInput" name="AplicantName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nationalitySelect">Nationality:</label>
+                        <select class="form-control" id="nationalitySelect" name="Nationality">
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary save-details-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        // function to fetch applicant data and create table rows
+        function createTableRows() {
+            $.ajax({
+                type: "GET",
+                url: "/ApplicantAnm/Display",
+                success: function (data) {
+                    // clear table rows before adding new ones
+                    $("#applicant-table tbody").empty();
+
+                    // loop through each applicant data and create table rows
+                    $.each(data, function (index, item) {
+                        // create table row
+                        var row = $("<tr>");
+
+                        // add table data for applicant id and name
+                        var idCell = $("<td>").text(item.applicantId);
+                        var nameCell = $("<td>").text(item.aplicantName);
+                        row.append(idCell, nameCell);
+
+                        // add View button to open modal
+                        var viewCell = $("<td>");
+                        var viewButton = $("<button>").addClass("btn btn-primary").text("View");
+                        viewButton.attr("data-applicant-id", item.applicantId);
+                        viewCell.append(viewButton);
+                        row.append(viewCell);
+
+                        // add row to table
+                        $("#applicant-table tbody").append(row);
+                    });
+                },
+                error: function () {
+                    alert("Error fetching data.");
+                },
+            });
+        }
+
+        // function to fetch applicant data by id and populate modal
+        function populateModal(applicantId) {
+            $.ajax({
+                type: "GET",
+                url: "/ApplicantAnm/Get/" + applicantId,
+                success: function (data) {
+                    // populate modal fields with applicant data
+                    $("#applicant-id").val(data.applicantId);
+                    $("#applicant-name").val(data.aplicantName);
+                    $("#nationality").val(data.nationality);
+                    $("#category").val(data.category);
+
+                    // show modal
+                    $("#view-modal").modal("show");
+                },
+                error: function () {
+                    alert("Error fetching data.");
+                },
+            });
+        }
+
+        // event listener for View button click
+        $(document).on("click", ".btn-view", function () {
+            
+            // get applicant id from data attribute
+            var applicantId = $(this).data("applicantId");
+
+            // populate modal with applicant data
+            populateModal(applicantId);
+        });
+
+        // event listener for Save button click in modal
+        $("#save-btn").on("click", function () {
+            // get data from modal fields
+            var applicantId = $("#applicant-id").val();
+            var nationality = $("#nationality").val();
+            var category = $("#category").val();
+
+            // update applicant data
+            $.ajax({
+                type: "POST",
+                url: "/ApplicantAnm/Update",
+                data: { applicantId: applicantId, nationality: nationality, category: category },
+                success: function () {
+                    // refresh table data
+                    createTableRows();
+
+                    // hide modal
+                    $("#view-modal").modal("hide");
+                },
+                error: function () {
+                    alert("Error updating data.");
+                },
+            });
+        });
+
+        // initial function call to create table rows
+        createTableRows();
+
+    </script>
+}

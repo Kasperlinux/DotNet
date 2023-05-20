@@ -1,0 +1,378 @@
+﻿@model IEnumerable<Bt.Models.ApplicantsAlliedCourse>
+@using System;
+
+
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap 5 JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+
+<h3>Mbbs</h3>
+
+
+<div class="table table-responsive">
+    <table class="table table-border table-striped" id="dataTableData">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Applicant Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Mobile</th>
+                <th>XII Percentage</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model)
+            {
+                <tr>
+                    <td id="AppId">@applicant.ApplicantId</td>
+                    <td><img src="data:image/png;base64,@System.Convert.ToBase64String(applicant.PassportPhoto)" width="70" height="70" /></td>
+                    <td>@applicant.AplicantName</td>
+                    <td>@applicant.AgeAsOnCutOffDate</td>
+                    <td>@applicant.Gender</td>
+                    <td>@applicant.Mobile</td>
+                    <td>@applicant.PercentageXii</td>
+                    <td>
+
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal_@applicant.ApplicantId" onclick="GetNationality(),GetReligion(),GetCategory(),GetState(),GetDistrict(),GetBlock(),GetVillage()">
+                            View
+                        </button>
+
+                    </td>
+
+                </tr>
+                <div class="modal fade bg-white" id="viewModal_@applicant.ApplicantId" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewModalLabel">View Applicant Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style=" max-height: 400px; overflow-y: auto;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="data:image/png;base64,@System.Convert.ToBase64String(applicant.PassportPhoto)" width="200" height="200" onclick="openFullscreen(this)" />
+                                        <a href="data:image/png;base64,@System.Convert.ToBase64String(applicant.PassportPhoto)" download="PassportPhoto.png"><i class="fas fa-download"></i></a>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h3>@applicant.AplicantName</h3>
+                                        <p><strong>Age:</strong> @applicant.AgeAsOnCutOffDate</p>
+                                        <p><strong>Gender: </strong>@applicant.Gender </p>
+                                        <p><strong>Mobile:</strong> @applicant.Mobile</p>
+                                        <p><strong>XII Percentage:</strong> @applicant.PercentageXii %</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <h3>General Information</h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Nationality: </strong><input type="text" id="Nationality" value="@applicant.Nationality" readonly /></p>
+                                        <p><strong>Religion:  </strong><input id="Religion" value="@applicant.Religion" readonly /></p>
+                                        <p><strong>DOB:  </strong> @applicant.Dob</p>
+                                        <p><strong>Category: </strong><input id="Category" value="@applicant.Category" readonly /></p>
+
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <h3>Academic Information</h3>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Class 12 Percentage: </strong>@applicant.PercentageXii</p>
+                                        <p><strong>PCB percentage:  </strong>@applicant.PercentagePcbXii</p>
+                                        <p><strong>PCM percentage:  </strong>@applicant.PercentagePcmXii</p>
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h2>Physics</h2>
+                                        <p><strong>Theory Marks: </strong>@applicant.MarksPhysicsTheory</p>
+                                        <p><strong> Practical Marks: </strong>@applicant.MarksPhysicsPractical</p>
+                                        <p><strong> Full Marks: </strong>@applicant.FullmarksPhysics</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h2>Chemistry</h2>
+                                        <p><strong> Theory Marks: </strong>@applicant.MarksChemistryTheory</p>
+                                        <p><strong> Practical Marks: </strong>@applicant.MarksChemistryPractical</p>
+                                        <p><strong> Full Marks: </strong>@applicant.FullmarksChemistry</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h2>Biology</h2>
+                                        <p><strong> Theory Marks: </strong>@applicant.MarksBiologyTheory</p>
+                                        <p><strong> Practical Marks: </strong>@applicant.MarksBiologyPractical</p>
+                                        <p><strong> Full Marks: </strong>@applicant.FullmarksBiology</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h2>Mathematics</h2>
+                                        <p><strong> Theory Marks: </strong>@applicant.MarksMathematicsTheory</p>
+                                        <p><strong> Practical Marks: </strong>@applicant.MarksMathematicsPractical</p>
+                                        <p><strong> Full Marks: </strong>@applicant.FullmarksMathematics</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <h3>Address Information</h3>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Permanent Address</strong></p>
+                                        <p><strong>State: </strong><input id="PerState" value="@applicant.PermanentState" readonly /></p>
+                                        <p><strong>District: </strong><input id="PerDistrict" value="@applicant.PermanentDistrict" readonly /></p>
+                                        <p><strong>Block: </strong><input id="PerBlock" value="@applicant.PermanentBlock" readonly /></p>
+                                        <p>
+                                            <strong>Village: </strong><input id="PerVillage" value="@applicant.PermanentVillage" readonly />
+                                        </p>
+                                        <p><strong>Address: </strong>@applicant.PresentAddress</p>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong><centre>Present Address</centre></strong></p>
+                                        <p><strong>State: </strong><input id="PreState" value="@applicant.PresentState" readonly /></p>
+                                        <p><strong>District: </strong><input id="PreDistrict" value="@applicant.PresentDistrict" readonly /></p>
+                                        <p><strong>Block: </strong><input id="PreBlock" value="@applicant.PresentBlock" readonly /></p>
+                                        <p><strong>Village: </strong><input id="PreVillage" value="@applicant.PresentVillage" readonly /></p>
+                                        <p><strong>Address: </strong>@applicant.PresentAddress</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <h3>Gurdian Infomration</h3>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <p><strong>Gurdian Name: </strong>@applicant.GuardianName</p>
+                                        <p><strong>Occupation: </strong>@applicant.GuardianOccupation</p>
+                                        <p><strong>Gurdian Office Name: </strong>@applicant.GuardianOfficeName</p>
+                                        <p><strong>Gurdian Office Address: </strong>@applicant.GuardianOfficeAddress</p>
+
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <p><strong> Guardian Employer Certificate </strong></p>
+                                        <img src="data:image/png;base64,@System.Convert.ToBase64String(applicant.GuardianEmployerCertificate)" width="200" height="200" onclick="openFullscreen(this)" />
+                                        <a href="data:image/png;base64,@System.Convert.ToBase64String(applicant.GuardianEmployerCertificate)" download="EmpCerti.png"><i class="fas fa-download"></i></a>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <h3>Documents</h3>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Age proof</strong></p>
+                                        <img src="data:image/png;base64,@System.Convert.ToBase64String(applicant.AgeProof)" width="200" height="200" onclick="openFullscreen(this)" />
+                                        <a href="data:image/png;base64,@System.Convert.ToBase64String(applicant.AgeProof)" download="PrCetificate.png"><i class="fas fa-download"></i></a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Marksheet</strong></p>
+                                        <img src="data:image/png;base64,@System.Convert.ToBase64String(applicant.Marksheet)" width="200" height="200" onclick="openFullscreen(this)" />
+                                        <a href="data:image/png;base64,@System.Convert.ToBase64String(applicant.Marksheet)" download="Marksheet.png"><i class="fas fa-download"></i></a>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Character Certificate</strong></p>
+                                        <img src="data:image/png;base64,@System.Convert.ToBase64String(applicant.CharacterCertificate)" width="200" height="200" onclick="openFullscreen(this)" />
+                                        <a href="data:image/png;base64,@System.Convert.ToBase64String(applicant.CharacterCertificate)" download="CharacterCertificate.png"><i class="fas fa-download"></i></a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Category Certificate</strong></p>
+                                        <img src="data:image/png;base64,@System.Convert.ToBase64String(applicant.CategoryCertificate)" width="200" height="200" onclick="openFullscreen(this)" />
+                                        <a href="data:image/png;base64,@System.Convert.ToBase64String(applicant.CategoryCertificate)" download="CategoryCertificate.png"><i class="fas fa-download"></i></a>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script src="~/js/datatable_file.js"></script>
+    <script>
+        function openFullscreen(img) {
+
+            if (img.requestFullscreen) {
+                img.requestFullscreen();
+            } else if (img.webkitRequestFullscreen) { /* Safari */
+                img.webkitRequestFullscreen();
+            } else if (img.msRequestFullscreen) { /* IE11 */
+                img.msRequestFullscreen();
+            }
+        }
+
+        //function GetNationality() {
+
+        //    const nationalityInput = document.querySelector('#Nationality').value;
+        //    console.log(nationalityInput);
+        //    $.ajax({
+        //        url: '/ApplicantAnm/GetNationalityName?id=' + nationalityInput,
+        //                success: function (result)
+        //                {
+        //                    console.log(result[0]);
+        //                    console.log("Before setting= "+result[0].nationalityName);
+        //                    nationalityInput.value= result[0].nationalityName;
+        //                    console.log("after setting= " + result[0].nationalityName);
+        //                }
+        //     });
+
+
+        //}
+
+
+        function GetNationality() {
+
+            var item = $("#Nationality").val();
+
+            $.ajax({
+                url: '/ApplicantAnm/GetNationalityName?id=' + item,
+                success: function (result) {
+                    $("#Nationality").val(result[0].nationalityName);
+                }
+            });
+        }
+        function GetReligion() {
+
+            var item = $("#Religion").val();
+
+
+            $.ajax({
+                url: '/ApplicantAnm/GetReligionName?id=' + item,
+                success: function (result) {
+                    $("#Religion").val(result[0].religionDesc);
+                }
+            });
+        }
+        function GetCategory() {
+
+            var item = $("#Category").val();
+
+
+            $.ajax({
+                url: '/ApplicantAnm/GetCategoryName?id=' + item,
+                success: function (result) {
+
+                    $("#Category").val(result[0].categoryDesc);
+                }
+            });
+        }
+        function GetState() {
+
+            var per = $("#PerState").val();
+            var pre = $("#PreState").val();
+            $.ajax({
+                url: '/ApplicantAnm/GetStateName?id=' + per,
+                success: function (result) {
+                    $("#PerState").val(result[0].stateName);
+                }
+            });
+            $.ajax({
+                url: '/ApplicantAnm/GetStateName?id=' + pre,
+                success: function (result) {
+                    $("#PreState").val(result[0].stateName);
+                }
+            });
+        }
+        function GetDistrict() {
+            var per = $("#PerDistrict").val();
+            var pre = $("#PreDistrict").val();
+            $.ajax({
+                url: '/ApplicantAnm/GetDistrictName?id=' + per,
+                success: function (result) {
+                    $("#PerDistrict").val(result[0].districtName);
+                }
+            });
+            $.ajax({
+                url: '/ApplicantAnm/GetDistrictName?id=' + pre,
+                success: function (result) {
+                    $("#PreDistrict").val(result[0].districtName);
+                }
+            });
+        }
+
+        function GetBlock() {
+
+            var per = $("#PerBlock").val();
+            var pre = $("#PreBlock").val();
+
+            $.ajax({
+                url: '/ApplicantAnm/GetBlockName?id=' + per,
+                success: function (result) {
+
+                    $("#PerBlock").val(result[0].blockName);
+                }
+            });
+            $.ajax({
+                url: '/ApplicantAnm/GetBlockName?id=' + pre,
+                success: function (result) {
+                    $("#PreBlock").val(result[0].blockName);
+                }
+            });
+        }
+
+        function GetVillage() {
+
+            var per = $("#PerVillage").val();
+            var pre = $("#PreVillage").val();
+
+            $.ajax({
+                url: '/ApplicantAnm/GetVillageName?id=' + per,
+                success: function (result) {
+                    $("#PerVillage").val(result[0].villageName);
+                }
+            });
+
+            $.ajax({
+                url: '/ApplicantAnm/GetVillageName?id=' + pre,
+                success: function (result) {
+                    $("#PreVillage").val(result[0].villageName);
+                }
+            });
+        }
+
+
+    </script>
+}
+
+

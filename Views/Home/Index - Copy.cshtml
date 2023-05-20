@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    header, main, footer {
+        padding: 20px;
+    }
+
+    /* Header Styles */
+    header {
+        background-color: #333;
+        color: #fff;
+    }
+
+        header h1 {
+            margin: 0;
+            padding: 0;
+        }
+
+    /* Main Content Styles */
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    .form-links a {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+        text-decoration: none;
+    }
+
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+</style>
+<header>
+    <h1>Medical Registration Portal</h1>
+</header>
+
+<main>
+    <h2>Registration Forms</h2>
+    <div class="form-links">
+        <a asp-action="Create" asp-controller="ApplicantAnm"><i class="fa-solid fa-stethoscope"></i>ANM Form</a>
+        <a asp-action="Create" asp-controller="ApplicantGnm"><i class="fa-solid fa-stethoscope"></i>GNM Form</a>
+        <a asp-action="Create" asp-controller="ApplicantMbbs"><i class="fa-solid fa-stethoscope"></i>MBBS Form</a>
+        <a asp-action="Create" asp-controller="ApplicantAllied"><i class="fa-solid fa-stethoscope"></i>Allied Courses Form</a>
+        
+    </div>
+</main>
