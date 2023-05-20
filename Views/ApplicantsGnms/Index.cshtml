@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Bt.Models.ApplicantsGnm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center"><i class="fa-solid fa-stethoscope"></i>Gnm Data</h1>
+
+<div id="view-all">
+    @await Html.PartialAsync("_ViewAll",Model)
+</div>
+
