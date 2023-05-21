@@ -22,6 +22,9 @@
 
 @* <div class="table table-responsive">
     <table class="table table-border table-striped" id="dataTableData">*@
+        <div>
+    <span id="recordCount"></span>
+        </div>
         <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
         <thead>
@@ -375,6 +378,15 @@
                 "autoWidth": false,
                 "responsive": true,
             });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var table = document.getElementById("example1");
+            var rowCount = table.rows.length - 1; // Exclude header row
+
+            var recordCountElement = document.getElementById("recordCount");
+            recordCountElement.textContent = "Number of records: " + rowCount;
         });
     </script>
 }
