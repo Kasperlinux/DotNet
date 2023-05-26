@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout_All";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    header, main, footer {
+        padding: 20px;
+    }
+
+    /* Header Styles */
+    header {
+        background-color: #333;
+        color: #fff;
+    }
+
+        header h1 {
+            margin: 0;
+            padding: 0;
+        }
+
+    /* Main Content Styles */
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    .form-links a {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+        text-decoration: none;
+    }
+
+        .form-links a:hover {
+            text-decoration: underline;
+        }
+</style>
+<header>
+    <h1>Medical Registration Portal</h1>
+</header>
+
+<main>
+    <h2>Registration Forms</h2>
+    <div class="form-links">
+        <a asp-action="Create" asp-controller="ApplicantAnm"><i class="fa-solid fa-stethoscope"></i>ANM Form</a>
+        <a asp-action="Create" asp-controller="ApplicantGnm"><i class="fa-solid fa-stethoscope"></i>GNM Form</a>
+        <a asp-action="Create" asp-controller="ApplicantMbbs"><i class="fa-solid fa-stethoscope"></i>MBBS Form</a>
+        <a asp-action="Create" asp-controller="ApplicantAllied"><i class="fa-solid fa-stethoscope"></i>Allied Courses Form</a>
+    </div>
+
+        <div style="text-align:left">
+            <h1>General Instruction For Form Submission</h1>
+            <div style="border:dashed; border-width:5px; border-style:solid;">
+                <ul style="text-align:left">
+                    <li>Kindly ensure that you use your personal E-mail ID for applying, as it will be used for all future communications. Kindly create one, if you do not own a personal E-mail.</li>
+                    <li>Do Provide a working Mobile Number as important information will be sent from college on it (Preferably Your Personal)</li>
+                    <li>Enter the First Name and the Last Name.</li>
+                    <li>Enter a valid E-mail ID.</li>
+                    <li>Enter a working Mobile Number.</li>
+                    <li>Select your Date Of Birth from the drop-down window.</li>
+                    <li>Upload the necessary documents that have been asked</li>
+                    <li>Click on "Submit"</li>
+                </ul>
+            </div>
+        </div>
+  
+</main>

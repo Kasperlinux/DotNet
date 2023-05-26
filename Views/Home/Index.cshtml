@@ -1,0 +1,124 @@
+﻿<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner" >
+                <h3><span id ="recordCountAnm"></span></h3>
+
+                <p>ANM Count</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bars"></i>
+            </div>
+            <a asp-controller="ApplicantAnm" asp-action="Display" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3><span id="recordCountGnm"></span></h3>
+
+                <p>GNM Count</p>
+            </div>
+            <div class="icon">
+                
+            </div>
+            <a asp-controller="ApplicantGnm" asp-action="Display" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+            <div class="inner" id="mbbs_count">
+                <h3><span id="recordCountMbbs"></span></h3>
+
+                <p>Mbbs Count</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-bars"></i>
+            </div>
+            <a asp-controller="ApplicantMbbs" asp-action="Display" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3><span id="recordCountAllied"></span></h3>
+
+                <p>Allied Count</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-bars"></i>
+            </div>
+            <a asp-controller="ApplicantAllied" asp-action="Display"  class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+</div>
+<!-- /.row -->
+<!-- Custom tabs (Charts with tabs)-->
+<!-- Main row -->
+<!-- Custom tabs (Charts with tabs)-->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-chart-pie mr-1"></i>
+            Chart
+        </h3>
+        <div class="card-tools">
+            <ul class="nav nav-pills ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                </li>
+            </ul>
+        </div>
+    </div><!-- /.card-header -->
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="tab-content p-0">
+            <!-- Morris chart - Sales -->
+            <div class="chart tab-pane active" id="revenue-chart"
+                 style="position: relative; height: 300px;">
+                <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+            </div>
+            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+            </div>
+        </div>
+    </div><!-- /.card-body -->
+
+
+<!-- Main row -->
+
+<!-- /.row (main row) -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        
+
+        $.ajax({
+            url: '/Home/CountRecords',
+            success: function (result) {
+                var recordCountAnm = document.getElementById("recordCountAnm");
+                var recordCountGnm = document.getElementById("recordCountGnm");
+                var recordCountMbbs = document.getElementById("recordCountMbbs");
+                var recordCountAllied = document.getElementById("recordCountAllied");
+
+                recordCountAnm.textContent = result.recordCountAnm;
+                recordCountGnm.textContent = result.recordCountGnm;
+                recordCountMbbs.textContent = result.recordCountMbbs;
+                recordCountAllied.textContent = result.recordCountAllied;
+                
+            }
+        });
+    });
+</script>
